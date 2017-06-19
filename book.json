@@ -1,3 +1,6 @@
 {
-    "plugins": ["youtube", "expandable-chapters"]
+    "plugins": ["youtube", "expandable-chapters"],
+    "pluginsConfig": {
+	"expandable-chapters":{}
+    }
 }
