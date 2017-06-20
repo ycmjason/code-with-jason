@@ -1,7 +1,7 @@
+*.sw*
 *.epub
 *.mobi
 *.pdf
 .grunt
 _book
-generateSummary.js
 node_modules
