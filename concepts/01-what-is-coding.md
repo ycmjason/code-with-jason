@@ -9,6 +9,8 @@ Coding 可以用唔同的 programming language 。而唔同的 programming langu
 
 想知多啲？睇下面extra reading啦！
 
+--------------------------------
+
 ## Extra reading
 
 ### Machine code
