@@ -1,10 +1,11 @@
 const fs = require('fs');
 const path = require('path');
 
-/* gitignore style */
 const IGNORE_FILES = [
+  /* gitignore style */
   'SUMMARY.md',
 ];
+const DEFAULT_README_TITLE = 'Introduction';
 
 const isNotIgnored = (() => {
   const ignoredPatterns = fs.readFileSync('./.gitignore', 'utf8')
@@ -50,10 +51,20 @@ class File{
     return capitalize(sepWords(this.name));
   }
 
+  get title(){
+    if(this instanceof Dir) return this.prettyname;
+    const titleLine = this.getLines()[0];
+    return titleLine.substring(titleLine.lastIndexOf('#') + 1).trim()
+      || this.prettyname;
+  }
+
   get ext(){
     return this.path.substring(this.path.lastIndexOf('.'));
   }
 
+  getLines(){
+    return fs.readFileSync(this.path, 'utf8').split('\n');
+  }
 }
 
 class Dir extends File{
@@ -118,7 +129,7 @@ class Part extends Root{
   }
 
   getHeader(){
-    return `## ${this.prettyname}`;
+    return `## ${this.title}`;
   }
 }
 
@@ -141,11 +152,11 @@ class Article extends File{
   get prettyname(){
     const original_prettyname = super.prettyname;
     if(original_prettyname !== 'Readme') return original_prettyname;
-    return 'Introduction';
+    return DEFAULT_README_TITLE;
   }
 
   toSummary(){
-    return `* [${this.prettyname}](${this.path})`;
+    return `* [${this.title}](${this.path})`;
   }
 }
 
